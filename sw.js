@@ -24,6 +24,10 @@ self.addEventListener('fetch', event => {
         try {
           // If the resource was not in the cache, try the network.
           const fetchResponse = await fetch(event.request);
+          fetch(event.request).then(function(response) {
+  if (!response || response.status !== 200 || response.type !== 'basic') {
+    return response;
+  }
 
           // Save the resource in the cache and return it.
           cache.put(event.request, fetchResponse.clone());
